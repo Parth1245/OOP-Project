@@ -55,7 +55,7 @@ public class App {
         System.out.println("6. Yearly Expense List");
         System.out.println("7. Catagorised Expense List");
         System.out.println("8. exit");
-        System.out.println("------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
         choice = scan.nextInt();
