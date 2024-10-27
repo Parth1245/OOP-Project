@@ -1,6 +1,7 @@
 package Personal;
 import java.io.IOException;
-import java.time.LocalDate;
+// import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 public class App {
@@ -89,15 +90,17 @@ public class App {
         scan.nextLine();
         System.out.print("Enter Remark:");
         String remark = scan.nextLine();
-        // System.out.println("Enter Date: ");
-        LocalDate Date = LocalDate.now();
+        System.out.println("Enter Date(DD/MM/YYYY): ");
+        String dateAsString = scan.nextLine();
+        Date date = DateUtil.stringToDate(dateAsString);
+        // LocalDate Date = LocalDate.now();
 
         // add expense detail in expense object
         Expense exp = new Expense();
         exp.setCategoryID(selectedCat.getCategoryID());
         exp.setAmount(amount);
         exp.setRemark(remark);
-        exp.setDate(Date);
+        exp.setDate(date);
 
         // store exp obj in database
         repo.expList.add(exp);
@@ -110,7 +113,8 @@ public class App {
         for(int i = 0; i < expList.size(); i++){
             Expense exp = expList.get(i);
             String catName = getCategoryName(exp.getCategoryID());
-            System.out.println((i+1) + ". " + catName + ", Rs." + exp.getAmount() + ", " + exp.getRemark() + ", " + exp.getDate());
+            String dateString = DateUtil.dateToString(exp.getDate());
+            System.out.println((i+1) + ". " + catName + ", Rs." + exp.getAmount() + ", " + exp.getRemark() + ", " + dateString);
         }
     }
 

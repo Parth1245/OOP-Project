@@ -1,21 +1,22 @@
 package Personal;
-import java.time.LocalDate;
+// import java.time.LocalDate;
+import java.util.Date;
 public class Expense {
     private Long expenseID = System.currentTimeMillis();
     private Long categoryID;
     private Float amount;
-    private LocalDate Date = LocalDate.now();
+    private Date date = new Date();
     private String remark;
     
     public Expense(){
         
     }
 
-    public Expense(Long categoryID, Float amount, LocalDate date, String remark) {
+    public Expense(Long categoryID, Float amount, Date date, String remark) {
         // this.expenseID = expenseID;
         this.categoryID = categoryID;
         this.amount = amount;
-        Date = date;
+        this.date = date;
         this.remark = remark;
     }
 
@@ -43,12 +44,12 @@ public class Expense {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
-        return Date;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDate(LocalDate date) {
-        Date = date;
+    public void setDate(java.util.Date date2) {
+        date = date2;
     }
 
     public String getRemark() {
