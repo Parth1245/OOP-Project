@@ -1,6 +1,6 @@
 package Personal;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 public class App {
@@ -22,6 +22,18 @@ public class App {
                     break;
                 case 3:
                     addExpenseEntry();
+                    pressAnyKeyToContinue();
+                    break;
+                case 4:
+                    expenseList();
+                    pressAnyKeyToContinue();
+                    break;
+                case 5:
+                    monthlyExpenseList();
+                    pressAnyKeyToContinue();
+                    break;
+                case 6:
+                    yearlyExpenseList();
                     pressAnyKeyToContinue();
                     break;
                 case 8:
@@ -78,13 +90,28 @@ public class App {
         System.out.print("Enter Remark:");
         String remark = scan.nextLine();
         // System.out.println("Enter Date: ");
-        Date date = new Date();
+        LocalDate Date = LocalDate.now();
 
+        // add expense detail in expense object
+        Expense exp = new Expense();
+        exp.setCategoryID(selectedCat.getCategoryID());
+        exp.setAmount(amount);
+        exp.setRemark(remark);
+        exp.setDate(Date);
+
+        // store exp obj in database
+        repo.expList.add(exp);
+        System.out.println("Expense added.");
     }
 
     public void expenseList(){
-        System.out.println("Adding Category...");
-        //todo
+        System.out.println("Listing Expenses: ");
+        List<Expense> expList = repo.expList;
+        for(int i = 0; i < expList.size(); i++){
+            Expense exp = expList.get(i);
+            String catName = getCategoryName(exp.getCategoryID());
+            System.out.println((i+1) + ". " + catName + ", Rs." + exp.getAmount() + ", " + exp.getRemark() + ", " + exp.getDate());
+        }
     }
 
     public void monthlyExpenseList(){
@@ -116,6 +143,16 @@ public class App {
             e.printStackTrace();
         }
     }
+    String getCategoryName(Long cId) {
+        for (Category c : repo.catList) {
+            if (c.getCategoryID() == cId) { 
+                return c.getName();
+            }
+        }
+        return null; 
+    }
+    
+    
     public static void main(String[] args) {
         
     }
