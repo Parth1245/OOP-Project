@@ -24,7 +24,6 @@ public class App {
                     pressAnyKeyToContinue();
                     break;
                 case 8:
-                    // add category
                     System.exit(0);
                 default:
                     break;
