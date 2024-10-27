@@ -1,5 +1,6 @@
 package Personal;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 public class App {
@@ -20,7 +21,7 @@ public class App {
                     pressAnyKeyToContinue();
                     break;
                 case 3:
-                    addCategory();
+                    addExpenseEntry();
                     pressAnyKeyToContinue();
                     break;
                 case 8:
@@ -67,7 +68,18 @@ public class App {
 
     public void addExpenseEntry(){
         System.out.println("Adding Expense Entry...");
-        //todo
+        categoryList();
+        System.out.println("Choose Category: ");
+        int catChoice = scan.nextInt();
+        Category selectedCat = repo.catList.get(catChoice-1);
+        System.out.print("Enter amount: ");
+        float amount = scan.nextFloat();
+        scan.nextLine();
+        System.out.print("Enter Remark:");
+        String remark = scan.nextLine();
+        // System.out.println("Enter Date: ");
+        Date date = new Date();
+
     }
 
     public void expenseList(){
