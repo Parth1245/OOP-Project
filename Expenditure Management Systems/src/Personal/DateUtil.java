@@ -19,5 +19,9 @@ public class DateUtil {
         return df.format(date);
     }
     
+    public static String getYearMonth(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM");
+        return df.format(date);
+    } 
     
 }

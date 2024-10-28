@@ -2,13 +2,21 @@ package Personal;
 import java.io.IOException;
 // import java.time.LocalDate;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 import java.util.List;
 import java.util.Scanner;
 public class App {
     Repository repo = Repository.getRepository();
+    ReportService reportService = new ReportService();
 
     Scanner scan = new Scanner(System.in);
     private int choice;
+
+    public App(){
+        sampleData();
+    }
+
     public void showMenu(){
         while(true){
             printMenu();
@@ -119,8 +127,12 @@ public class App {
     }
 
     public void monthlyExpenseList(){
-        System.out.println("Adding Category...");
-        //todo
+        System.out.println("Total Monthly Expense: ");
+        Map<String,Float> resultMap = reportService.calculateMonthlyTotal();
+        Set<String> keys = resultMap.keySet();
+        for(String yearMonth : keys){
+            System.out.println(yearMonth + ": Rs." + resultMap.get(yearMonth));
+        }
     }
 
     public void yearlyExpenseList(){
@@ -156,6 +168,65 @@ public class App {
         return null; 
     }
     
+    //this is to demonstrate sample data, when complete no need for below function as user has to enter data.
+    public void sampleData(){
+        Category catParty = new Category("Party");
+        delay();
+        Category catRent = new Category("Rent");
+        delay();
+        Category catFood = new Category("Food");
+
+        repo.catList.add(catParty);
+        repo.catList.add(catRent);
+        repo.catList.add(catFood);
+
+        //Jan 2020
+        Expense e1 = new Expense(catParty.getCategoryID(), 1000.0f, DateUtil.stringToDate("01/01/2020"), "birthday");
+        delay();
+
+        Expense e2 = new Expense(catParty.getCategoryID(), 2000.0f, DateUtil.stringToDate("02/01/2020"), "anniversary");
+        delay();
+
+        //Feb 2020
+        Expense e3 = new Expense(catParty.getCategoryID(), 100.0f, DateUtil.stringToDate("01/02/2020"), "birthday");
+        delay();
+
+        Expense e4 = new Expense(catFood.getCategoryID(), 500.0f, DateUtil.stringToDate("02/02/2020"), "vegetables");
+        delay();
+
+        //Dec 2020
+        Expense e5 = new Expense(catRent.getCategoryID(), 8000.0f, DateUtil.stringToDate("01/12/2020"), "house");
+        delay();
+
+        Expense e6 = new Expense(catFood.getCategoryID(), 2000.0f, DateUtil.stringToDate("02/12/2020"), "restaurant");
+        delay();
+
+        //Jan 2021
+        Expense e7 = new Expense(catFood.getCategoryID(), 200.0f, DateUtil.stringToDate("01/01/2021"), "fruits");
+        delay();
+
+        //Feb 2021
+        Expense e8 = new Expense(catRent.getCategoryID(), 1000.0f, DateUtil.stringToDate("01/02/2021"), "shop");
+        delay();
+
+        repo.expList.add(e1);
+        repo.expList.add(e2);
+        repo.expList.add(e3);
+        repo.expList.add(e4);
+        repo.expList.add(e5);
+        repo.expList.add(e6);
+        repo.expList.add(e7);
+        repo.expList.add(e8);
+    }
+
+    private void delay(){
+        try{
+            Thread.sleep(10);
+        }
+        catch(InterruptedException ex){
+            ex.printStackTrace();
+        }
+    }
     
     public static void main(String[] args) {
         
