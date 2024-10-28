@@ -131,13 +131,26 @@ public class App {
         Map<String,Float> resultMap = reportService.calculateMonthlyTotal();
         Set<String> keys = resultMap.keySet();
         for(String yearMonth : keys){
-            System.out.println(yearMonth + ": Rs." + resultMap.get(yearMonth));
+            String[] arr = yearMonth.split("-");
+            String year = arr[0];
+            int monthNo = Integer.parseInt(arr[1]);
+            String month = DateUtil.getMonthName(monthNo);
+            System.out.println(year + ", " + month + ": Rs." + resultMap.get(yearMonth));
         }
     }
 
     public void yearlyExpenseList(){
-        System.out.println("Adding Category...");
-        //todo
+        System.out.println("Yearly Expense: ");
+        Map<Integer,Float> resultMap = reportService.calculateYearlyTotal();
+        Set<Integer> years = resultMap.keySet();
+        float t = 0.0f;
+
+        for(Integer year: years){
+            float exp = resultMap.get(year);
+            t += exp;
+            System.out.println(year + ": Rs." + exp);
+        }
+        System.out.println("Total Expense till date is: Rs."+ t);
     }
 
     public void categorisedExpenseList(){
