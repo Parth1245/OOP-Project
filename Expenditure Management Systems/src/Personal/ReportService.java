@@ -40,4 +40,31 @@ public class ReportService {
         }
         return m;
     }
+
+    public Map<String,Float> calculateCategorizedTotal(){
+        Map<String, Float> m = new TreeMap<>();
+
+        for(Expense e: repo.expList){
+            Long categoryId = e.getCategoryID();
+            String catName = this.getCategoryName(categoryId);
+            if(m.containsKey(catName)){
+                Float total = m.get(catName);
+                total += e.getAmount();
+                m.put(catName, total);
+            }
+            else{
+                m.put(catName, e.getAmount());
+            }
+        }
+        return m;
+    }
+
+    public String getCategoryName(Long cId) {
+        for (Category c : repo.catList) {
+            if (c.getCategoryID() == cId) { 
+                return c.getName();
+            }
+        }
+        return null; 
+    }
 }

@@ -45,6 +45,10 @@ public class App {
                     yearlyExpenseList();
                     pressAnyKeyToContinue();
                     break;
+                case 7:
+                    categorisedExpenseList();
+                    pressAnyKeyToContinue();
+                    break;
                 case 8:
                     System.exit(0);
                 default:
@@ -120,7 +124,7 @@ public class App {
         List<Expense> expList = repo.expList;
         for(int i = 0; i < expList.size(); i++){
             Expense exp = expList.get(i);
-            String catName = getCategoryName(exp.getCategoryID());
+            String catName = reportService.getCategoryName(exp.getCategoryID());
             String dateString = DateUtil.dateToString(exp.getDate());
             System.out.println((i+1) + ". " + catName + ", Rs." + exp.getAmount() + ", " + exp.getRemark() + ", " + dateString);
         }
@@ -154,8 +158,16 @@ public class App {
     }
 
     public void categorisedExpenseList(){
-        System.out.println("Adding Category...");
-        //todo
+        System.out.println("Categorized Expense List: ");
+        Map<String,Float> resultMap = reportService.calculateCategorizedTotal();
+        Set<String> categories = resultMap.keySet();
+        float total = 0.0f;
+        for(String categoryName : categories){
+            float catWiseTotal = resultMap.get(categoryName);
+            total += catWiseTotal;
+            System.out.println(categoryName + ": Rs." + resultMap.get(categoryName));
+        }
+        System.out.println("Category Wise Total: Rs." + total);
     }
 
     public void exit(){
@@ -172,14 +184,14 @@ public class App {
             e.printStackTrace();
         }
     }
-    String getCategoryName(Long cId) {
-        for (Category c : repo.catList) {
-            if (c.getCategoryID() == cId) { 
-                return c.getName();
-            }
-        }
-        return null; 
-    }
+    // String getCategoryName(Long cId) {
+    //     for (Category c : repo.catList) {
+    //         if (c.getCategoryID() == cId) { 
+    //             return c.getName();
+    //         }
+    //     }
+    //     return null; 
+    // }
     
     //this is to demonstrate sample data, when complete no need for below function as user has to enter data.
     public void sampleData(){
