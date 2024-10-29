@@ -5,6 +5,7 @@ import java.util.List;
 public class Repository {
     public List<Expense> expList = new ArrayList<>();
     public List<Category> catList = new ArrayList<>();
+    public float Balance = 0.0f;
     private static Repository repository;
     private Repository(){
     }

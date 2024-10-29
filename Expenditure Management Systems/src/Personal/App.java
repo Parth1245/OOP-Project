@@ -12,12 +12,14 @@ public class App {
 
     Scanner scan = new Scanner(System.in);
     private int choice;
-
-    public App(){
-        sampleData();
-    }
+    
+    
+    // public float repo.Balance = 0.0f;
 
     public void showMenu(){
+        System.out.print("Enter your bank balance: ");
+        repo.Balance = scan.nextFloat();
+        sampleData();
         while(true){
             printMenu();
             switch (choice) {
@@ -50,6 +52,14 @@ public class App {
                     pressAnyKeyToContinue();
                     break;
                 case 8:
+                    addBalance();
+                    pressAnyKeyToContinue();
+                    break;
+                case 9:
+                    viewBalance();
+                    pressAnyKeyToContinue();
+                    break;
+                case 10:
                     System.exit(0);
                 default:
                     break;
@@ -66,7 +76,9 @@ public class App {
         System.out.println("5. Monthly Expense List");
         System.out.println("6. Yearly Expense List");
         System.out.println("7. Catagorised Expense List");
-        System.out.println("8. exit");
+        System.out.println("8. Add Balance");        
+        System.out.println("9. View Balance");        
+        System.out.println("10. exit");
         System.out.println("-------------------------------------------------------------------");
 
         System.out.print("Enter your choice: ");
@@ -117,6 +129,8 @@ public class App {
         // store exp obj in database
         repo.expList.add(exp);
         System.out.println("Expense added.");
+        repo.Balance = repo.Balance - exp.getAmount();
+        System.out.println("Bank Balance: Rs." + repo.Balance);
     }
 
     public void expenseList(){
@@ -170,6 +184,17 @@ public class App {
         System.out.println("Category Wise Total: Rs." + total);
     }
 
+    public void addBalance(){
+        System.out.print("Enter amount you want to add: ");
+        float income = scan.nextFloat();
+        repo.Balance += income;
+        System.out.println("Your Bank Balance is: Rs." + repo.Balance);
+    }
+
+    public void viewBalance(){
+        System.out.println("Your Account Balance is: Rs." + repo.Balance);
+    }
+
     public void exit(){
         System.out.println("Exiting program....");
         System.exit(0);
@@ -207,31 +232,39 @@ public class App {
 
         //Jan 2020
         Expense e1 = new Expense(catParty.getCategoryID(), 1000.0f, DateUtil.stringToDate("01/01/2020"), "birthday");
+        repo.Balance = repo.Balance - e1.getAmount();
         delay();
 
         Expense e2 = new Expense(catParty.getCategoryID(), 2000.0f, DateUtil.stringToDate("02/01/2020"), "anniversary");
+        repo.Balance = repo.Balance - e2.getAmount();
         delay();
 
         //Feb 2020
         Expense e3 = new Expense(catParty.getCategoryID(), 100.0f, DateUtil.stringToDate("01/02/2020"), "birthday");
+        repo.Balance = repo.Balance - e3.getAmount();
         delay();
 
         Expense e4 = new Expense(catFood.getCategoryID(), 500.0f, DateUtil.stringToDate("02/02/2020"), "vegetables");
+        repo.Balance = repo.Balance - e4.getAmount();
         delay();
 
         //Dec 2020
         Expense e5 = new Expense(catRent.getCategoryID(), 8000.0f, DateUtil.stringToDate("01/12/2020"), "house");
+        repo.Balance = repo.Balance - e5.getAmount();
         delay();
 
         Expense e6 = new Expense(catFood.getCategoryID(), 2000.0f, DateUtil.stringToDate("02/12/2020"), "restaurant");
+        repo.Balance = repo.Balance - e6.getAmount();
         delay();
 
         //Jan 2021
         Expense e7 = new Expense(catFood.getCategoryID(), 200.0f, DateUtil.stringToDate("01/01/2021"), "fruits");
+        repo.Balance = repo.Balance - e7.getAmount();
         delay();
 
         //Feb 2021
         Expense e8 = new Expense(catRent.getCategoryID(), 1000.0f, DateUtil.stringToDate("01/02/2021"), "shop");
+        repo.Balance = repo.Balance - e8.getAmount();
         delay();
 
         repo.expList.add(e1);
