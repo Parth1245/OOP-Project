@@ -61,9 +61,4 @@ public class Expense implements Serializable{ //interfaces used here
     public void setRemark(String remark) {
         this.remark = remark;
     }
-
-    
-
-    
-
 }

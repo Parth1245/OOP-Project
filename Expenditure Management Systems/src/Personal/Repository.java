@@ -16,4 +16,40 @@ public class Repository {
         }
         return repository;
     }
+
+    // Method to search expenses by category name
+    public List<Expense> getExpensesByCategoryName(String categoryName) {
+        List<Expense> result = new ArrayList<>();
+        Long categoryId = null;
+
+        // Find the categoryID for the given category name
+        for (Category category : catList) {
+            if (category.getName().equalsIgnoreCase(categoryName)) {
+                categoryId = category.getCategoryID();
+                break;
+            }
+        }
+
+        // If category found, search for expenses with matching categoryID
+        if (categoryId != null) {
+            for (Expense expense : expList) {
+                if (expense.getCategoryID().equals(categoryId)) {
+                    result.add(expense);
+                }
+            }
+        }
+
+        return result; // Returns expenses or empty list if no match found
+    }
+
+    // Method to search expenses by remark keyword
+    public List<Expense> searchExpensesByRemark(String keyword) {
+        List<Expense> result = new ArrayList<>();
+        for (Expense expense : expList) {
+            if (expense.getRemark() != null && expense.getRemark().contains(keyword)) {
+                result.add(expense);
+            }
+        }
+        return result; // Returns expenses with matching remark
+    }
 }

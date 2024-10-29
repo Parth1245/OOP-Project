@@ -45,7 +45,7 @@ public class App {
             System.out.print("Enter your bank balance: ");
             repo.Balance = scan.nextFloat();
         }
-        //sampleData();
+        sampleData();
         while(true){
             printMenu();
             switch (choice) {
@@ -86,6 +86,10 @@ public class App {
                     pressAnyKeyToContinue();
                     break;
                 case 10:
+                    search();
+                    pressAnyKeyToContinue();
+                    break;
+                case 0:
                     exit();
                 default:
                     break;
@@ -93,6 +97,46 @@ public class App {
         }
     }
     
+    private void search() {
+        int choice;
+        while(true){
+            System.out.println("Choose how you want to search: ");
+            System.out.println("1. By Category");
+            System.out.println("2. By Expense Remark");
+            System.out.println("3. Go Back");
+            choice = scan.nextInt();
+
+            switch (choice) {
+                case 1:
+                    scan.nextLine();
+                    System.out.print("Enter Category name: ");
+                    String name = scan.nextLine();
+                    List<Expense> Expenses = repo.getExpensesByCategoryName(name);
+                    for (Expense exp : Expenses) {
+                        String dateString = DateUtil.dateToString(exp.getDate());
+                        String catName = reportService.getCategoryName(exp.getCategoryID());
+                        System.out.println(catName + ", Rs." + exp.getAmount() + ", " + exp.getRemark() + ", " + dateString);
+                    }
+                    break;
+                case 2:
+                    scan.nextLine();
+                    System.out.print("Enter Remark: ");
+                    String remark = scan.nextLine();
+                    List<Expense> ticketExpenses = repo.searchExpensesByRemark(remark);
+                    for (Expense exp : ticketExpenses) {
+                        String dateString = DateUtil.dateToString(exp.getDate());
+                        String catName = reportService.getCategoryName(exp.getCategoryID());
+                        System.out.println(catName + ", Rs." + exp.getAmount() + ", " + exp.getRemark() + ", " + dateString);
+                    }
+                    break;
+                case 3:
+                    return;
+                default:
+                    break;
+            }
+        }
+    }
+
     public void printMenu(){
         System.out.println("---------------------Personal Espense Manager----------------------");
         System.out.println("1. Add Category");
@@ -104,7 +148,8 @@ public class App {
         System.out.println("7. Catagorised Expense List");
         System.out.println("8. Add Balance");        
         System.out.println("9. View Balance");        
-        System.out.println("10. exit");
+        System.out.println("10. Search");
+        System.out.println("0. exit");
         System.out.println("-------------------------------------------------------------------");
 
         System.out.print("Enter your choice: ");

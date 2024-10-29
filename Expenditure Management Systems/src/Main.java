@@ -7,4 +7,4 @@ public class Main {
     }
 }
 
-//run sample data for first sun only, remove on second run
+//run sample data for first run only, remove on second run
