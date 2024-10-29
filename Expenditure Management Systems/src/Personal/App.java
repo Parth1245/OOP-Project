@@ -1,5 +1,9 @@
 package Personal;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 // import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
@@ -13,13 +17,35 @@ public class App {
     Scanner scan = new Scanner(System.in);
     private int choice;
     
-    
+    public App(){
+        loadData();
+    }
     // public float repo.Balance = 0.0f;
+    float Balance = 0.0f;
+    @SuppressWarnings("unchecked")
+    private void loadData() {
+        List<Expense> expList = (List<Expense>)deserialize("expenses.ser");
+        List<Category> catList = (List<Category>)deserialize("categories.ser");
+        Balance = (deserialize("balance.ser") instanceof Float) ? (Float) deserialize("balance.ser") : 0.0f;
+
+        if(expList != null){
+            //load to repo
+            repo.expList = expList;
+        }
+        if(catList != null){
+            repo.catList = catList;
+        }
+        if(Balance != 0.0){
+            repo.Balance = Balance;
+        }
+    }
 
     public void showMenu(){
-        System.out.print("Enter your bank balance: ");
-        repo.Balance = scan.nextFloat();
-        sampleData();
+        if(Balance == 0.0f){
+            System.out.print("Enter your bank balance: ");
+            repo.Balance = scan.nextFloat();
+        }
+        //sampleData();
         while(true){
             printMenu();
             switch (choice) {
@@ -60,7 +86,7 @@ public class App {
                     pressAnyKeyToContinue();
                     break;
                 case 10:
-                    System.exit(0);
+                    exit();
                 default:
                     break;
             }
@@ -196,8 +222,51 @@ public class App {
     }
 
     public void exit(){
+        saveData();
         System.out.println("Exiting program....");
         System.exit(0);
+    }
+
+    private void saveData() {
+        serialize("expenses.ser", repo.expList);
+        serialize("categories.ser", repo.catList);
+        serialize("balance.ser", repo.Balance);
+    }
+
+    public void serialize(String file, Object obj){
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(obj);
+            oos.close();
+            fos.close();
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Object deserialize(String file){
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+        try {
+            fis = new FileInputStream(file);
+            ois = new ObjectInputStream(fis);
+            Object obj = ois.readObject();
+            return obj;
+        } catch (Exception e) {
+            System.out.println("No existing data.");
+            return null;
+        }
+        finally {
+            try {
+                if (ois != null) ois.close();
+                if (fis != null) fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void pressAnyKeyToContinue(){

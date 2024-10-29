@@ -1,7 +1,9 @@
 package Personal;
 // import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.Date;
-public class Expense {
+
+public class Expense implements Serializable{ //interfaces used here
     private Long expenseID = System.currentTimeMillis();
     private Long categoryID;
     private Float amount;
