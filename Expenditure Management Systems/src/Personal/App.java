@@ -45,7 +45,7 @@ public class App {
             System.out.print("Enter your bank balance: ");
             repo.Balance = scan.nextFloat();
         }
-        sampleData();
+        // sampleData();
         while(true){
             printMenu();
             switch (choice) {
@@ -138,14 +138,14 @@ public class App {
     }
 
     public void printMenu(){
-        System.out.println("---------------------Personal Espense Manager----------------------");
+        System.out.println("---------------------Personal Expense Manager----------------------");
         System.out.println("1. Add Category");
         System.out.println("2. Category List");
         System.out.println("3. Expense Entry");
         System.out.println("4. Expense List");
         System.out.println("5. Monthly Expense List");
         System.out.println("6. Yearly Expense List");
-        System.out.println("7. Catagorised Expense List");
+        System.out.println("7. Categorised Expense List");
         System.out.println("8. Add Balance");        
         System.out.println("9. View Balance");        
         System.out.println("10. Search");
